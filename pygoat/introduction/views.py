@@ -6,6 +6,7 @@ from requests.structures import CaseInsensitiveDict
 import requests
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.html import escape
 
 #*****************************************Lab Requirements****************************************************#
 
@@ -358,7 +359,7 @@ def Otp(request):
             return render(request,"Lab/BrokenAuth/otp.html")
     else:
         otpR=request.POST.get("otp")
-        email=request.COOKIES.get("email")
+        email=escape(request.COOKIES.get("email"))
         if otp.objects.filter(email=email,otp=otpR) or otp.objects.filter(id=2,otp=otpR):
             return HttpResponse("<h3>Login Success for email:::"+email+"</h3>")
         else:
